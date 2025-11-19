@@ -1,0 +1,6 @@
+# Core dependencies - all compatible with Python 2.7+ for Windows 7
+numpy>=1.16.0,<1.17.0
+torch>=1.4.0,<1.8.0
+transformers>=2.11.0,<3.0.0
+tkinter
+Pillow>=6.2.0,<7.0.0

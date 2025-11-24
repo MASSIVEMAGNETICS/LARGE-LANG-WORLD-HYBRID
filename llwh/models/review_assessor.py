@@ -1,6 +1,8 @@
 """Review Assessment Module for analyzing and evaluating text reviews."""
 
+from __future__ import division
 import re
+import datetime
 from typing import Dict, List, Any, Optional
 
 
@@ -385,7 +387,6 @@ class ReviewAssessor:
     
     def _get_timestamp(self):
         """Get current timestamp (simplified)."""
-        import datetime
         return datetime.datetime.now().isoformat()
     
     def batch_assess(self, texts):

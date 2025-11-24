@@ -3,6 +3,7 @@
 from __future__ import division
 import re
 import datetime
+import io
 from typing import Dict, List, Any, Optional
 
 
@@ -387,7 +388,7 @@ class ReviewAssessor:
     
     def _get_timestamp(self):
         """Get current timestamp (simplified)."""
-        return datetime.datetime.now().isoformat()
+        return datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
     
     def batch_assess(self, texts):
         """
@@ -485,25 +486,25 @@ class ReviewAssessor:
         if assessments is None:
             assessments = self.assessment_history
         
-        with open(filepath, 'w') as f:
-            f.write("Review Assessment Report\n")
-            f.write("=" * 50 + "\n\n")
+        with io.open(filepath, 'w', encoding='utf-8') as f:
+            f.write(u"Review Assessment Report\n")
+            f.write(u"=" * 50 + u"\n\n")
             
             stats = self.get_assessment_statistics()
-            f.write("Statistics:\n")
-            f.write("  Total Assessments: {}\n".format(stats['total_assessments']))
-            f.write("  Average Score: {}\n".format(stats['average_score']))
-            f.write("  Highest Score: {}\n".format(stats['highest_score']))
-            f.write("  Lowest Score: {}\n\n".format(stats['lowest_score']))
+            f.write(u"Statistics:\n")
+            f.write(u"  Total Assessments: {}\n".format(stats['total_assessments']))
+            f.write(u"  Average Score: {}\n".format(stats['average_score']))
+            f.write(u"  Highest Score: {}\n".format(stats['highest_score']))
+            f.write(u"  Lowest Score: {}\n\n".format(stats['lowest_score']))
             
-            f.write("Individual Assessments:\n")
-            f.write("-" * 50 + "\n")
+            f.write(u"Individual Assessments:\n")
+            f.write(u"-" * 50 + u"\n")
             
             for i, assessment in enumerate(assessments, 1):
-                f.write("\nAssessment #{}\n".format(i))
-                f.write("  Text: {}\n".format(assessment.get('text', 'N/A')))
-                f.write("  Score: {}\n".format(assessment.get('score', 'N/A')))
-                f.write("  Timestamp: {}\n".format(assessment.get('timestamp', 'N/A')))
+                f.write(u"\nAssessment #{}\n".format(i))
+                f.write(u"  Text: {}\n".format(assessment.get('text', 'N/A')))
+                f.write(u"  Score: {}\n".format(assessment.get('score', 'N/A')))
+                f.write(u"  Timestamp: {}\n".format(assessment.get('timestamp', 'N/A')))
     
     def clear_history(self):
         """Clear assessment history."""

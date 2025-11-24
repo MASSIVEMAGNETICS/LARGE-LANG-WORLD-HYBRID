@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from llwh.core import HybridLanguageWorldModel
 from llwh.training import ModelTrainer
 from llwh.agents import PipelineBuilder
-from llwh.models import AIChatManager
+from llwh.models import AIChatManager, ReviewAssessor
 import torch
 
 
@@ -124,6 +124,65 @@ def example_model_save_load():
         os.remove(save_path)
 
 
+def example_review_assessment():
+    """Example: Review Assessment."""
+    print("\n=== Example 6: Review Assessment ===")
+    
+    # Create review assessor
+    assessor = ReviewAssessor()
+    
+    # Sample reviews to assess
+    review1 = """This is an excellent product! The quality is outstanding and 
+    it exceeded all my expectations. I would highly recommend this to anyone 
+    looking for a reliable solution. The design is brilliant and the 
+    functionality is perfect. Five stars!"""
+    
+    review2 = """Bad product not good waste money."""
+    
+    review3 = """The product is okay. It has some good features but also some 
+    issues. The price is reasonable. I think it could be improved in several 
+    areas, particularly the user interface. Overall, it's decent for the price."""
+    
+    # Assess individual reviews
+    print("\n--- Assessing Review 1 ---")
+    assessment1 = assessor.assess_review(review1, include_details=True)
+    print("Overall Score:", assessment1['overall_score'])
+    print("Recommendation:", assessment1['recommendation'])
+    print("Quality Score:", assessment1['quality_score'])
+    print("Sentiment Score:", assessment1['sentiment_score'])
+    print("Positive Indicators:", assessment1['details']['positive_indicators'])
+    
+    print("\n--- Assessing Review 2 ---")
+    assessment2 = assessor.assess_review(review2)
+    print("Overall Score:", assessment2['overall_score'])
+    print("Recommendation:", assessment2['recommendation'])
+    
+    print("\n--- Assessing Review 3 ---")
+    assessment3 = assessor.assess_review(review3)
+    print("Overall Score:", assessment3['overall_score'])
+    print("Recommendation:", assessment3['recommendation'])
+    
+    # Batch assessment
+    print("\n--- Batch Assessment ---")
+    batch_results = assessor.batch_assess([review1, review2, review3])
+    for i, result in enumerate(batch_results, 1):
+        print("Review {}: Score = {}".format(i, result['overall_score']))
+    
+    # Compare reviews
+    print("\n--- Comparing Reviews ---")
+    comparison = assessor.compare_reviews(review1, review2)
+    print("Better Review:", comparison['better_review'])
+    print("Score Difference:", comparison['score_difference'])
+    
+    # Get statistics
+    print("\n--- Assessment Statistics ---")
+    stats = assessor.get_assessment_statistics()
+    print("Total Assessments:", stats['total_assessments'])
+    print("Average Score:", stats['average_score'])
+    print("Highest Score:", stats['highest_score'])
+    print("Lowest Score:", stats['lowest_score'])
+
+
 def main():
     """Run all examples."""
     print("=" * 60)
@@ -136,6 +195,7 @@ def main():
         example_ai_chat()
         example_training_setup()
         example_model_save_load()
+        example_review_assessment()
         
         print("\n" + "=" * 60)
         print("All examples completed successfully!")

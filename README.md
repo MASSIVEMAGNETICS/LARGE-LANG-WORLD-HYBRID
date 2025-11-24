@@ -34,6 +34,13 @@ A REVOLUTIONARY HYBRID AI SYSTEM combining Large Language Models with World Mode
 - Different collaboration strategies (round-robin, voting, consensus)
 - Conversation export and analysis
 
+⭐ **Review Assessment System**
+- Comprehensive text review analysis
+- Quality, sentiment, and coherence scoring
+- Factual consistency checking
+- Batch processing capabilities
+- Detailed assessment reports and statistics
+
 ## System Requirements
 
 - **Operating System**: Windows 7 or higher, Linux, macOS
@@ -230,6 +237,52 @@ solution = manager.collaborative_solve(
 
 # Export conversation
 manager.export_conversation(0, 'conversation.txt')
+```
+
+### Review Assessment
+
+```python
+from llwh.models import ReviewAssessor
+
+# Create review assessor
+assessor = ReviewAssessor()
+
+# Assess a single review
+review_text = """This is an excellent product! The quality is outstanding 
+and it exceeded all my expectations. I would highly recommend this."""
+
+assessment = assessor.assess_review(review_text, include_details=True)
+
+# View results
+print("Overall Score:", assessment['overall_score'])
+print("Recommendation:", assessment['recommendation'])
+print("Quality Score:", assessment['quality_score'])
+print("Sentiment Score:", assessment['sentiment_score'])
+print("Coherence Score:", assessment['coherence_score'])
+print("Clarity Score:", assessment['clarity_score'])
+
+# Batch assessment
+reviews = [review1, review2, review3]
+batch_results = assessor.batch_assess(reviews)
+
+# Compare two reviews
+comparison = assessor.compare_reviews(review1, review2)
+print("Better Review:", comparison['better_review'])
+print("Score Difference:", comparison['score_difference'])
+
+# Check factual consistency
+consistency_score = assessor.assess_factual_consistency(
+    review_text, 
+    reference_texts=[reference1, reference2]
+)
+
+# Get statistics
+stats = assessor.get_assessment_statistics()
+print("Total Assessments:", stats['total_assessments'])
+print("Average Score:", stats['average_score'])
+
+# Export report
+assessor.export_assessment_report('assessment_report.txt')
 ```
 
 ## Architecture
